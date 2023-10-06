@@ -1,4 +1,16 @@
+"""
+やりたいこと
+1、入力画面
+    プレイヤー名を取得
+    CPUの種類等も取得
+2、ゲーム画面
+    オセロをやる
+    結果を表示
+    （できたら）
+        座標を表示　棋譜を取る
+"""
 import random
+import tkinter as tk
 
 class Othello:
     def __init__(self, p1="player1",p1_att=0, p2="player2",p2_att=0,board=None):
@@ -83,8 +95,6 @@ class Othello:
         x, y = map(int, input().split())
         return x, y
 
-    def com_random(self, lst):
-        return random.choice(lst)
 
     def game(self):
         turn = 1
@@ -98,7 +108,7 @@ class Othello:
                 x, y = self.player_turn(can_put_list)
 
             elif self.attribute[turn] == 100:
-                x, y = self.com_random(can_put_list)
+                x, y = random.choice(can_put_list)
 
             else:
                 x, y = can_put_list[0]
@@ -113,6 +123,26 @@ class Othello:
 
         self.result_output()
 
+def main():
+    root = tk.Tk()
+    root.title("オセロ")
+    data = None
+    entry(root)
+    main_game(root, data)
 
-game = Othello(p1_att=100,p2_att=100)
-game.game()
+class entry:
+    def __init__(self, root):
+        self.fr = tk.Frame(root)
+
+
+class main_game:
+    def __init__(self, root, play_data=None):
+        self.main = tk.Frame(root)
+        if play_data:
+            self.othello = Othello(*play_data)
+        else:
+            self.othello = Othello()
+
+
+if __name__ == "__main__":
+    main()
